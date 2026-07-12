@@ -1,0 +1,1 @@
+    DNA is a molecule all organism that stores genetic information. made from chemical building blocks called nucleotides.   
