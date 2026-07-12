@@ -1,4 +1,8 @@
-    # Advanced Bioinformatics Features Roadmap
+# Advanced Bioinformatics Features Roadmap
+
+This roadmap describes the DNA Analysis Toolkit's planned feature evolution,
+from core sequence analysis through comparative genomics and visualization.
+It maps directly onto the phases tracked in [PROGRESS.md](../PROGRESS.md).
 
 ## Gene-Level Analysis Features
 
@@ -249,4 +253,3 @@ Communicating genomic insights:
 * Codon heatmaps
 
 Together, these features transform the toolkit from a basic DNA sequence analyzer into a scalable computational genomics platform capable of supporting research workflows, education, and future machine learning applications.
- 

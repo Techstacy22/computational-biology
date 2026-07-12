@@ -1,14 +1,15 @@
 # DNA Analysis Toolkit — Progress
 
 ## Session Handoff (update every session)
-- Last completed phase: Phase 0 — Project Scaffolding & Packaging
-- Next action: Start Phase 1 — clean up `protein-function-prediction/` and
-  migrate its roadmap notes into `docs/roadmap.md`
+- Last completed phase: Phase 1 — protein-function-prediction Cleanup
+- Next action: Start Phase 2 — build the `Sequence` data model and DNA
+  validation in `src/dna_toolkit/models/sequence.py` and
+  `src/dna_toolkit/utils/validation.py`
 - Open decisions / questions: none
 
 ## Phase Checklist
 - [x] Phase 0 — Scaffolding & Packaging
-- [ ] Phase 1 — protein-function-prediction Cleanup
+- [x] Phase 1 — protein-function-prediction Cleanup
 - [ ] Phase 2 — Sequence Model & Validation
 - [ ] Phase 3 — FASTA I/O
 - [ ] Phase 4 — CLI Wiring + GC Content
@@ -30,3 +31,6 @@
 - 2026-07-12: MIT license; hatchling build backend.
 - 2026-07-12: Phase 0 complete — `src/dna_toolkit` package installable via
   `pip install -e ".[dev]"`, `dna-toolkit --version` works, CI configured.
+- 2026-07-12: Phase 1 complete — removed stray `protein-function-prediction/
+  src/io` file, migrated its misfiled roadmap notes to `docs/roadmap.md`,
+  added a parked-status README to `protein-function-prediction/`.
