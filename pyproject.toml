@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dna-analysis-toolkit"
+version = "0.1.0"
+description = "A modular, research-oriented bioinformatics toolkit for DNA sequence analysis."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.12"
+authors = [{ name = "Techstacy22" }]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "black>=24.0",
+    "mypy>=1.10",
+]
+
+[project.scripts]
+dna-toolkit = "dna_toolkit.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dna_toolkit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+
+[tool.mypy]
+python_version = "3.12"
+packages = ["dna_toolkit"]
+mypy_path = "src"
+strict = false
+disallow_untyped_defs = true

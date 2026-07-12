@@ -1,0 +1,6 @@
+# Runtime dependencies (none yet — added as later phases need them).
+# Development tooling:
+pytest>=8.0
+ruff>=0.6
+black>=24.0
+mypy>=1.10
