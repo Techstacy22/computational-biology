@@ -1,16 +1,16 @@
 # DNA Analysis Toolkit — Progress
 
 ## Session Handoff (update every session)
-- Last completed phase: Phase 1 — protein-function-prediction Cleanup
-- Next action: Start Phase 2 — build the `Sequence` data model and DNA
-  validation in `src/dna_toolkit/models/sequence.py` and
-  `src/dna_toolkit/utils/validation.py`
+- Last completed phase: Phase 2 — Sequence Model & Validation
+- Next action: Start Phase 3 — FASTA parser/writer in
+  `src/dna_toolkit/io/fasta_parser.py` and `src/dna_toolkit/io/writer.py`,
+  plus `data/examples/demo_seq_1.fasta`
 - Open decisions / questions: none
 
 ## Phase Checklist
 - [x] Phase 0 — Scaffolding & Packaging
 - [x] Phase 1 — protein-function-prediction Cleanup
-- [ ] Phase 2 — Sequence Model & Validation
+- [x] Phase 2 — Sequence Model & Validation
 - [ ] Phase 3 — FASTA I/O
 - [ ] Phase 4 — CLI Wiring + GC Content
 - [ ] Phase 5 — Motif Search
@@ -34,3 +34,8 @@
 - 2026-07-12: Phase 1 complete — removed stray `protein-function-prediction/
   src/io` file, migrated its misfiled roadmap notes to `docs/roadmap.md`,
   added a parked-status README to `protein-function-prediction/`.
+- 2026-07-12: Phase 2 complete — added `Sequence` frozen dataclass
+  (`models/sequence.py`) with validation, normalization, and
+  `reverse_complement()`; DNA alphabet/IUPAC constants in `config.py`;
+  `utils/validation.py` raises `SequenceValidationError` naming the bad
+  character and 1-based position.
