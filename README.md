@@ -1,10 +1,12 @@
 The DNA Analysis Toolkit core objectives:
-1.Comprehensive DNA Analysis: bioinformatics analysis including sequence processsing, translation, alignment, mutation detection, motif discovery, and statistical analysis.
-2.Modular Architecture:
-3.Research Reproducibility:
-4.Professional Software Engineering :
-5.Future Machine Learning Integration:
-6.Educational Value:
+The toolkit is guided by six primary objectives:
+
+Develop a unified framework for performing DNA sequence analysis.
+Build a modular architecture that is easy to extend and maintain.
+Ensure reproducible and scientifically reliable computational analyses.
+Apply professional software engineering best practices throughout development.
+Design the system to support future AI and machine learning integration.
+Provide an educational platform for learning bioinformatics and computational genomics.
   
 
 **PROJECT VISION 
@@ -21,7 +23,35 @@ my long term vision for my DNA analysis toolkit into a comprehensive computation
 - Clinical genomics research
 - Large-scale biological data processing
 
-
+system overview**
+User
+    │
+    ▼
+Command Line Interface
+    │
+    ▼
+Input Processing
+    │
+    ▼
+Validation
+    │
+    ▼
+Analysis Service
+    │
+    ├── GC Content
+    ├── Motif Search
+    ├── Translation
+    ├── ORF Detection
+    └── Alignment
+    │
+    ▼
+Visualization
+    │
+    ▼
+Report Generation
+    │
+    ▼
+Results
 
 THE ARCHITECTURAL DESIGN FOR THE DNA ANALYSIS TOOLKIT
 dna-analysis-toolkit/
@@ -73,3 +103,59 @@ dna-analysis-toolkit/
 │   └── examples/
 ├── scripts/
 └── notebooks/
+
+dna-analysis-toolkit/
+
+                User
+                  │
+                  ▼
+        Command Line Interface
+                  │
+                  ▼
+         Application Service Layer
+                  │
+                  ▼
+      Bioinformatics Analysis Layer
+                  │
+        ┌─────────┼─────────┐
+        │         │         │
+        ▼         ▼         ▼
+   GC Content  Motif    Translation
+                Search
+        │
+        ▼
+     Sequence Model
+        │
+        ▼
+   FASTA Parser & Validation
+        │
+        ▼
+      Input Files
+
+      tech stack *
+      Programming Language
+Python 3.12+
+Package Management
+pip
+virtual environments
+pyproject.toml
+Bioinformatics
+Biopython (future integration)
+Data Processing
+NumPy
+Pandas (future)
+Visualization
+Matplotlib
+Plotly (future)
+Testing
+pytest
+Code Quality
+Ruff
+Black
+MyPy
+Documentation
+Markdown
+MkDocs (future)
+Version Control
+Git
+GitHub
