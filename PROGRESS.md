@@ -1,9 +1,9 @@
 # DNA Analysis Toolkit — Progress
 
 ## Session Handoff (update every session)
-- Last completed phase: Phase 4 — CLI Wiring + GC Content
-- Next action: Start Phase 5 — motif search (`analysis/motif_search.py`,
-  `MotifMatch` dataclass, `dna-toolkit motif-search <file> --motif <seq>
+- Last completed phase: Phase 5 — Motif Search
+- Next action: Start Phase 6 — ORF detection (`analysis/orf.py`, `ORF`
+  dataclass, `find_orfs`, `dna-toolkit orf-find <file> [--min-length N]
   [--both-strands]`)
 - Open decisions / questions: none
 
@@ -13,7 +13,7 @@
 - [x] Phase 2 — Sequence Model & Validation
 - [x] Phase 3 — FASTA I/O
 - [x] Phase 4 — CLI Wiring + GC Content
-- [ ] Phase 5 — Motif Search
+- [x] Phase 5 — Motif Search
 - [ ] Phase 6 — ORF Detection
 - [ ] Phase 7 — Translation
 - [ ] Phase 8 — Codon Usage Analysis
@@ -51,3 +51,8 @@
   `dna-toolkit gc-content <file>`; FastaParseError/SequenceValidationError/
   OSError are caught at the CLI boundary and printed as one-line `Error: ...`
   messages instead of raw tracebacks.
+- 2026-07-12: Phase 5 complete — `analysis/motif_search.py` (`MotifMatch`,
+  `find_motif`), searches both strands by default by reverse-complementing
+  the motif (not the whole sequence) and re-scanning the forward bases; CLI
+  gained `dna-toolkit motif-search <file> --motif <seq> [--forward-only]`
+  (both strands is the CLI default too, opt out via --forward-only).

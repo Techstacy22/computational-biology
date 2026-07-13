@@ -54,3 +54,25 @@ def test_gc_content_command_malformed_file_is_friendly(
     captured = capsys.readouterr()
     assert exit_code == 1
     assert captured.err.startswith("Error:")
+
+
+def test_motif_search_command(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
+    fasta_file = tmp_path / "seq.fasta"
+    fasta_file.write_text(">seq1\nATGGAATTCGG\n")
+
+    exit_code = run(["motif-search", str(fasta_file), "--motif", "GAATTC"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert "+ strand, position 3-9: GAATTC" in captured.out
+
+
+def test_motif_search_command_no_match(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
+    fasta_file = tmp_path / "seq.fasta"
+    fasta_file.write_text(">seq1\nATGGGG\n")
+
+    exit_code = run(["motif-search", str(fasta_file), "--motif", "TTTT"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert "No matches for 'TTTT' found." in captured.out

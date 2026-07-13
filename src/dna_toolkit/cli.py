@@ -42,6 +42,22 @@ def build_parser() -> argparse.ArgumentParser:
     )
     gc_parser.add_argument("file", help="path to a FASTA file")
 
+    motif_parser = subparsers.add_parser(
+        "motif-search",
+        help="find occurrences of a short DNA pattern (e.g. a restriction site)",
+    )
+    motif_parser.add_argument("file", help="path to a FASTA file")
+    motif_parser.add_argument(
+        "--motif",
+        required=True,
+        help="the DNA pattern to search for (case-insensitive, e.g. GAATTC)",
+    )
+    motif_parser.add_argument(
+        "--forward-only",
+        action="store_true",
+        help="only search the forward (+) strand; by default both strands are searched",
+    )
+
     return parser
 
 
@@ -60,6 +76,27 @@ def _run_gc_content(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_motif_search(args: argparse.Namespace) -> int:
+    sequences = AnalysisService.load_sequences(args.file)
+    logger.debug("loaded %d sequence(s) from %s", len(sequences), args.file)
+
+    if not sequences:
+        print("No sequences found in file.")
+        return 0
+
+    both_strands = not args.forward_only
+    for seq in sequences:
+        matches = AnalysisService.motif_search(seq, args.motif, both_strands=both_strands)
+        print(f"Sequence: {seq.id} ({len(seq)} bp)")
+        if not matches:
+            print(f"  No matches for '{args.motif.upper()}' found.")
+            continue
+        for m in matches:
+            print(f"  {m.strand} strand, position {m.start}-{m.end}: {seq.bases[m.start:m.end]}")
+
+    return 0
+
+
 def run(argv: Args[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -73,6 +110,8 @@ def run(argv: Args[str] | None = None) -> int:
     try:
         if args.command == "gc-content":
             return _run_gc_content(args)
+        if args.command == "motif-search":
+            return _run_motif_search(args)
     except _USER_FACING_ERRORS as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1
