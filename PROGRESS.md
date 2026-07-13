@@ -1,10 +1,10 @@
 # DNA Analysis Toolkit — Progress
 
 ## Session Handoff (update every session)
-- Last completed phase: Phase 5 — Motif Search
-- Next action: Start Phase 6 — ORF detection (`analysis/orf.py`, `ORF`
-  dataclass, `find_orfs`, `dna-toolkit orf-find <file> [--min-length N]
-  [--both-strands]`)
+- Last completed phase: Phase 6 — ORF Detection
+- Next action: Start Phase 7 — translation (`config.py` gains
+  `STANDARD_CODON_TABLE`, `analysis/translation.py` `translate_sequence`,
+  `dna-toolkit translate <file> [--frame N] [--through-stop]`)
 - Open decisions / questions: none
 
 ## Phase Checklist
@@ -14,7 +14,7 @@
 - [x] Phase 3 — FASTA I/O
 - [x] Phase 4 — CLI Wiring + GC Content
 - [x] Phase 5 — Motif Search
-- [ ] Phase 6 — ORF Detection
+- [x] Phase 6 — ORF Detection
 - [ ] Phase 7 — Translation
 - [ ] Phase 8 — Codon Usage Analysis
 - [ ] Phase 9 — Nucleotide Statistics & K-mers
@@ -56,3 +56,9 @@
   the motif (not the whole sequence) and re-scanning the forward bases; CLI
   gained `dna-toolkit motif-search <file> --motif <seq> [--forward-only]`
   (both strands is the CLI default too, opt out via --forward-only).
+- 2026-07-12: Phase 6 complete — `analysis/orf.py` (`ORF`, `find_orfs`),
+  scans all 3 forward + 3 reverse reading frames for start-codon...stop-codon
+  runs; extracted the reverse-complement-a-raw-string helper both this and
+  motif_search need into `utils/helpers.py` (`reverse_complement_str`) to
+  avoid duplicating it. CLI gained `dna-toolkit orf-find <file>
+  [--min-length N] [--forward-only]`.

@@ -58,6 +58,24 @@ def build_parser() -> argparse.ArgumentParser:
         help="only search the forward (+) strand; by default both strands are searched",
     )
 
+    orf_parser = subparsers.add_parser(
+        "orf-find",
+        help="find candidate open reading frames (start codon...stop codon, no internal stops)",
+    )
+    orf_parser.add_argument("file", help="path to a FASTA file")
+    orf_parser.add_argument(
+        "--min-length",
+        type=int,
+        default=1,
+        metavar="N",
+        help="minimum ORF length in bases, start through stop codon inclusive (default: 1)",
+    )
+    orf_parser.add_argument(
+        "--forward-only",
+        action="store_true",
+        help="only search the forward (+) strand; by default both strands are searched",
+    )
+
     return parser
 
 
@@ -97,6 +115,31 @@ def _run_motif_search(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_orf_find(args: argparse.Namespace) -> int:
+    sequences = AnalysisService.load_sequences(args.file)
+    logger.debug("loaded %d sequence(s) from %s", len(sequences), args.file)
+
+    if not sequences:
+        print("No sequences found in file.")
+        return 0
+
+    both_strands = not args.forward_only
+    for seq in sequences:
+        orfs = AnalysisService.orf_find(seq, min_length=args.min_length, both_strands=both_strands)
+        print(f"Sequence: {seq.id} ({len(seq)} bp)")
+        if not orfs:
+            print("  No ORFs found.")
+            continue
+        for orf in orfs:
+            protein_length = len(orf.bases) // 3 - 1  # amino acids, excluding the stop codon
+            print(
+                f"  {orf.strand} strand, frame {orf.frame}, position {orf.start}-{orf.end} "
+                f"({len(orf.bases)} bp, ~{protein_length} aa)"
+            )
+
+    return 0
+
+
 def run(argv: Args[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -112,6 +155,8 @@ def run(argv: Args[str] | None = None) -> int:
             return _run_gc_content(args)
         if args.command == "motif-search":
             return _run_motif_search(args)
+        if args.command == "orf-find":
+            return _run_orf_find(args)
     except _USER_FACING_ERRORS as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1

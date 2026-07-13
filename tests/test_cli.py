@@ -76,3 +76,25 @@ def test_motif_search_command_no_match(capsys: pytest.CaptureFixture[str], tmp_p
     captured = capsys.readouterr()
     assert exit_code == 0
     assert "No matches for 'TTTT' found." in captured.out
+
+
+def test_orf_find_command(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
+    fasta_file = tmp_path / "seq.fasta"
+    fasta_file.write_text(">seq1\nATGAAATAAGG\n")
+
+    exit_code = run(["orf-find", str(fasta_file), "--forward-only"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert "+ strand, frame 0, position 0-9 (9 bp, ~2 aa)" in captured.out
+
+
+def test_orf_find_command_no_orfs(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
+    fasta_file = tmp_path / "seq.fasta"
+    fasta_file.write_text(">seq1\nCCCCCCCCC\n")
+
+    exit_code = run(["orf-find", str(fasta_file)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert "No ORFs found." in captured.out

@@ -2,8 +2,8 @@
 
 from dataclasses import dataclass
 
-from dna_toolkit.config import COMPLEMENT_MAP
 from dna_toolkit.models.sequence import Sequence
+from dna_toolkit.utils.helpers import reverse_complement_str
 from dna_toolkit.utils.validation import normalize_sequence, validate_dna_sequence
 
 
@@ -46,15 +46,11 @@ def find_motif(sequence: Sequence, motif: str, both_strands: bool = True) -> lis
     matches = _find_substring_matches(sequence.bases, motif, strand="+")
 
     if both_strands:
-        rc_motif = _reverse_complement_str(motif)
+        rc_motif = reverse_complement_str(motif)
         matches += _find_substring_matches(sequence.bases, rc_motif, strand="-")
 
     matches.sort(key=lambda m: (m.start, m.strand))
     return matches
-
-
-def _reverse_complement_str(bases: str) -> str:
-    return "".join(COMPLEMENT_MAP[base] for base in reversed(bases))
 
 
 def _find_substring_matches(bases: str, pattern: str, strand: str) -> list[MotifMatch]:

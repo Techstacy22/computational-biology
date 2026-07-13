@@ -7,6 +7,7 @@ itself. Each new analysis feature gets one more method here.
 
 from dna_toolkit.analysis.gc_content import calculate_gc_content
 from dna_toolkit.analysis.motif_search import MotifMatch, find_motif
+from dna_toolkit.analysis.orf import ORF, find_orfs
 from dna_toolkit.io.fasta_parser import parse_fasta
 from dna_toolkit.models.sequence import Sequence
 
@@ -23,3 +24,7 @@ class AnalysisService:
     @staticmethod
     def motif_search(sequence: Sequence, motif: str, both_strands: bool = True) -> list[MotifMatch]:
         return find_motif(sequence, motif, both_strands=both_strands)
+
+    @staticmethod
+    def orf_find(sequence: Sequence, min_length: int = 1, both_strands: bool = True) -> list[ORF]:
+        return find_orfs(sequence, min_length=min_length, both_strands=both_strands)
