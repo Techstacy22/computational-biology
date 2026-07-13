@@ -1,11 +1,10 @@
 # DNA Analysis Toolkit — Progress
 
 ## Session Handoff (update every session)
-- Last completed phase: Phase 3 — FASTA I/O
-- Next action: Start Phase 4 — wire up the CLI and implement GC content
-  analysis (first end-to-end feature: `analysis/gc_content.py`,
-  `services/analysis_service.py`, `utils/logging.py`, `cli.py` gains
-  `dna-toolkit gc-content <file>`)
+- Last completed phase: Phase 4 — CLI Wiring + GC Content
+- Next action: Start Phase 5 — motif search (`analysis/motif_search.py`,
+  `MotifMatch` dataclass, `dna-toolkit motif-search <file> --motif <seq>
+  [--both-strands]`)
 - Open decisions / questions: none
 
 ## Phase Checklist
@@ -13,7 +12,7 @@
 - [x] Phase 1 — protein-function-prediction Cleanup
 - [x] Phase 2 — Sequence Model & Validation
 - [x] Phase 3 — FASTA I/O
-- [ ] Phase 4 — CLI Wiring + GC Content
+- [x] Phase 4 — CLI Wiring + GC Content
 - [ ] Phase 5 — Motif Search
 - [ ] Phase 6 — ORF Detection
 - [ ] Phase 7 — Translation
@@ -45,3 +44,10 @@
   (`write_fasta`, wraps at 60 chars by default); added
   `data/examples/demo_seq_1.fasta` (the shared tutorial sequence used from
   here on) and `data/examples/demo_multi.fasta`.
+- 2026-07-12: Phase 4 complete — first end-to-end pipeline. Added
+  `analysis/gc_content.py`, `services/analysis_service.py` (thin
+  orchestration layer, extended by every later analysis phase), and
+  `utils/logging.py` (`--verbose`/`-v`). CLI gained
+  `dna-toolkit gc-content <file>`; FastaParseError/SequenceValidationError/
+  OSError are caught at the CLI boundary and printed as one-line `Error: ...`
+  messages instead of raw tracebacks.
